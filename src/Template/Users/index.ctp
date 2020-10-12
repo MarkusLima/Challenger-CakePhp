@@ -1,69 +1,44 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="container-list-users">
-        <?php foreach ($user as $us) : ?>
-            <div class="users">
-                <span class="id">
-                    <span class="span-titulo">ID</span>
-                    <span class="span-"><?php echo $us->id; ?> </span>
-                </span>
-                <span class="name">
-                    <span class="span-titulo">NAME</span>
-                    <span class="span-"><?php echo $us->name; ?> </span>
-                </span>
-                <span class="cpf">
-                    <span class="span-titulo">CPF</span>
-                    <span class="span-"><?php echo $us->cpf; ?> </span>
-                </span>
-                <span class="nasc">
-                    <span class="span-titulo">NASCIMENTO</span>
-                    <span class="span-"><?php echo $us->dt_nascimento; ?></span>
-                </span>
-                <span class="email">
-                    <span class="span-titulo">E-MAIL</span>
-                    <span class="span-"><?php echo $us->email; ?> </span>
-                </span>
-                <span class="phone">
-                    <span class="span-titulo">PHONE</span>
-                    <span class="span-"><?php echo $us->phone; ?> </span>
-                </span>
-                <span class="address">
-                    <span class="span-titulo">ADDRESS</span>
-                    <span class="span-"><?php echo $us->address; ?> </span>
-                </span>
-                <span class="city">
-                    <span class="span-titulo">CITY</span>
-                    <span class="span-"><?php echo $us->city; ?> </span>
-                </span>
-                <span class="state">
-                    <span class="span-titulo">STATE</span>
-                    <span class="span-"><?php echo $us->state; ?> </span>
-                </span>
-                <span class="created">
-                    <span class="span-titulo">CREATED</span>
-                    <span class="span-"><?php echo $us->created; ?> </span>
-                </span>
-                <span class="modified">
-                    <span class="span-titulo">MODIFIED</span>
-                    <span class="span-"><?php echo $us->modified; ?> </span>
-                </span>
+/**
+ * @var \App\View\AppView $this
+ * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $users
+ */
+?>
+<div class="container-fluid">
+    <h3><?= __('USUÁRIOS') ?></h3>
+    <div class="row">
+        <?php foreach ($users as $user) : ?>
+            <div class="col col-lg-4">
+                <div class="card shadow-lg p-3 mb-5 bg-ligth rounded">
+                    <div><span class="text-primary">ID: </span><span class="text-secondary"><?= $this->Number->format($user->id) ?></span></div>
+                    <div><span class="text-primary">NOME: </span><span class="text-secondary"><?= h($user->name) ?></span></div>
+                    <div><span class="text-primary">CPF: </span><span class="text-secondary"><?= h($user->cpf) ?></span></div>
+                    <div><span class="text-primary">NASCIMENTO: </span><span class="text-secondary"><?= h($user->dt_nascimento) ?></span></div>
+                    <div><span class="text-primary">E-MAIL: </span><span class="text-secondary"><?= h($user->email) ?></span></div>
+                    <div><span class="text-primary">TEL: </span><span class="text-secondary"><?= h($user->phone) ?></span></div>
+                    <div><span class="text-primary">ENDEREÇO: </span><span class="text-secondary"><?= h($user->address) ?></span></div>
+                    <div><span class="text-primary">CIDADE: </span><span class="text-secondary"><?= h($user->city) ?></span></div>
+                    <div><span class="text-primary">ESTADO: </span><span class="text-secondary"><?= h($user->state) ?></span></div>
+                    <div><span class="text-primary">CRIADO EM: </span><span class="text-secondary"><?= h($user->created) ?></span></div>
+                    <div class="actions text-center">
+                        <?= $this->Html->link(__('VER'), ['action' => 'view', $user->id], ['class'=>'text-white bg-success p-1 mb-1']) ?>
+                        <?= $this->Html->link(__('EDITAR'), ['action' => 'edit', $user->id], ['class'=>'text-white bg-warning p-1 mb-1']) ?>
+                        <?= $this->Form->postlink(__('DELETAR'), ['action' => 'delete', $user->id], ['class'=>'text-white bg-danger p-1 mb-1'], ['confirm' => __('TEM CERTEZA QUE QUER APAGAR REGISTRO{0}?', $user->id)]) ?>
+                    </div>
+                </div>
             </div>
-            <span class="actions">
-                <a href="/">DETALHES</a>
-                <a href="/">EDITAR</a>
-                <a href="/">DELETAR</a>
-            </span>
         <?php endforeach; ?>
     </div>
 
-</body>
-
-</html>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('primeira')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('próxima') . ' >') ?>
+            <?= $this->Paginator->last(__('ultima') . ' >>') ?>
+        </ul>
+        <p><?= $this->Paginator->counter(['format' => __('Pagina {{page}} de {{pages}}, {{current}} regristro(s) - {{count}} total')]) ?></p>
+    </div>
+</div>
